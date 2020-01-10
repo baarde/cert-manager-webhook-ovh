@@ -19,7 +19,7 @@ func TestRunsSuite(t *testing.T) {
 	fixture := dns.NewFixture(&customDNSProviderSolver{},
 		dns.SetResolvedZone(zone),
 		dns.SetAllowAmbientCredentials(false),
-		dns.SetManifestPath("testdata/my-custom-solver"),
+		dns.SetManifestPath("testdata/ovh"),
 	)
 
 	fixture.RunConformance(t)
