@@ -1,12 +1,12 @@
 # The GroupName here is used to identify your company or business unit that
 # created this webhook.
-# For example, this may be "acme.mycompany.com".
+# For example, this may be "acme.mycompany.example".
 # This name will need to be referenced in each Issuer's `webhook` stanza to
 # inform cert-manager of where to send ChallengePayload resources in order to
 # solve the DNS01 challenge.
 # This group name should be **unique**, hence using your own company's domain
 # here is recommended.
-groupName: acme.mycompany.com
+groupName: acme.mycompany.example
 
 certManager:
   namespace: cert-manager
@@ -14,7 +14,7 @@ certManager:
 
 image:
   repository: baarde/cert-manager-webhook-ovh
-  tag: latest
+  # tag: latest
   pullPolicy: IfNotPresent
 
 nameOverride: ""
