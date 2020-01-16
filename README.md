@@ -1,40 +1,111 @@
-# ACME webhook example
+# OVH Webhook for Cert Manager
 
-The ACME issuer type supports an optional 'webhook' solver, which can be used
-to implement custom DNS01 challenge solving logic.
+This is a webhook solver for [OVH](http://www.ovh.com).
 
-This is useful if you need to use cert-manager with a DNS provider that is not
-officially supported in cert-manager core.
+## Prerequisites
 
-## Why not in core?
+* [cert-manager](https://github.com/jetstack/cert-manager) version 0.11.0 or higher (*tested with 0.12.0*):
+  - [Installing on Kubernetes](https://cert-manager.io/docs/installation/kubernetes/#installing-with-helm)
 
-As the project & adoption has grown, there has been an influx of DNS provider
-pull requests to our core codebase. As this number has grown, the test matrix
-has become un-maintainable and so, it's not possible for us to certify that
-providers work to a sufficient level.
+## Installation
 
-By creating this 'interface' between cert-manager and DNS providers, we allow
-users to quickly iterate and test out new integrations, and then packaging
-those up themselves as 'extensions' to cert-manager.
+Choose a unique group name to identify your company or organization (for example `acme.mycompany.example`).
 
-We can also then provide a standardised 'testing framework', or set of
-conformance tests, which allow us to validate the a DNS provider works as
-expected.
+```bash
+helm install ./deploy/cert-manager-webhook-ovh \
+ --set groupName='<YOUR_UNIQUE_GROUP_NAME>'
+```
 
-## Creating your own webhook
+If you customized the installation of cert-manager, you may need to also set the `certManager.namespace` and `certManager.serviceAccountName` values.
 
-Webhook's themselves are deployed as Kubernetes API services, in order to allow
-administrators to restrict access to webhooks with Kubernetes RBAC.
+## Issuer
 
-This is important, as otherwise it'd be possible for anyone with access to your
-webhook to complete ACME challenge validations and obtain certificates.
+1. [Create a new OVH API key](https://docs.ovh.com/gb/en/customer/first-steps-with-ovh-api/) with the following rights:
+    * `GET /domain/zone/*`
+    * `PUT /domain/zone/*`
+    * `POST /domain/zone/*`
+    * `DELETE /domain/zone/*`
 
-To make the set up of these webhook's easier, we provide a template repository
-that can be used to get started quickly.
+2. Create a secret to store your application secret:
 
-### Creating your own repository
+    ```bash
+    kubectl create secret generic ovh-credentials \
+      --from-literal=applicationSecret='<OVH_APPLICATION_SECRET>'
+    ```
 
-### Running the test suite
+3. Grant permission to get the secret to the `cert-manager-webhook-ovh` service account:
+
+    ```yaml
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: Role
+    metadata:
+      name: cert-manager-webhook-ovh:secret-reader
+    rules:
+    - apiGroups: [""]
+      resources: ["secrets"]
+      resourceNames: ["ovh-credentials"]
+      verbs: ["get", "watch"]
+    ---
+    apiVersion: rbac.authorization.k8s.io/v1beta1
+    kind: RoleBinding
+    metadata:
+      name: cert-manager-webhook-ovh:secret-reader
+    roleRef:
+      apiGroup: rbac.authorization.k8s.io
+      kind: Role
+      name: cert-manager-webhook-ovh:secret-reader
+    subjects:
+    - apiGroup: ""
+      kind: ServiceAccount
+      name: cert-manager-webhook-ovh
+    ```
+
+4. Create a certificate issuer:
+
+    ```yaml
+    apiVersion: certmanager.k8s.io/v1alpha1
+    kind: Issuer
+    metadata:
+      name: letsencrypt
+    spec:
+      acme:
+        server: https://acme-v02.api.letsencrypt.org/directory
+        email: '<YOUR_EMAIL_ADDRESS>'
+        privateKeySecretRef:
+          name: letsencrypt-account-key
+        solvers:
+        - dns01:
+            webhook:
+              groupName: '<YOUR_UNIQUE_GROUP_NAME>'
+              solverName: ovh
+              config:
+                endpoint: ovh-eu
+                applicationKey: '<OVH_APPLICATION_KEY>'
+                applicationSecretRef:
+                  key: applicationSecret
+                  name: ovh-credentials
+                consumerKey: '<OVH_CONSUMER_KEY>'
+    ```
+
+## Certificate
+
+Issue a certificate:
+
+```yaml
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: example-com
+spec:
+  dnsNames:
+  - example.com
+  - *.example.com
+  issuerRef:
+    name: letsencrypt
+  secretName: example-com-tls
+```
+
+## Development
 
 All DNS providers **must** run the DNS01 provider conformance testing suite,
 else they will have undetermined behaviour when used with cert-manager.
@@ -44,11 +115,16 @@ DNS01 webhook.**
 
 An example Go test file has been provided in [main_test.go]().
 
-You can run the test suite with:
+Before you can run the test suite, you need to download the test binaries:
 
 ```bash
-$ TEST_ZONE_NAME=example.com go test .
+./scripts/fetch-test-binaries.sh
 ```
 
-The example file has a number of areas you must fill in and replace with your
-own options in order for tests to pass.
+Then duplicate the `.sample` files in `testdata/ovh/` and update the configuration with the appropriate OVH credentials.
+
+Now you can run the test suite with:
+
+```bash
+TEST_ZONE_NAME=example.com. go test .
+```
