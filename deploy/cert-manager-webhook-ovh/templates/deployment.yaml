@@ -19,6 +19,8 @@ spec:
         app: {{ include "cert-manager-webhook-ovh.name" . }}
         release: {{ .Release.Name }}
     spec:
+      imagePullSecrets:
+{{ toYaml .Values.image.pullSecrets | indent 8 }}
       serviceAccountName: {{ include "cert-manager-webhook-ovh.fullname" . }}
       containers:
         - name: {{ .Chart.Name }}
