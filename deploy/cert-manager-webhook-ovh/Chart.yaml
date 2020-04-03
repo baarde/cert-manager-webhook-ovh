@@ -2,4 +2,4 @@ apiVersion: v1
 appVersion: "0.1.0"
 description: OVH DNS cert-manager ACME webhook
 name: cert-manager-webhook-ovh
-version: 0.1.0
+version: 0.2.0
