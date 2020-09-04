@@ -63,7 +63,7 @@ If you customized the installation of cert-manager, you may need to also set the
 4. Create a certificate issuer:
 
     ```yaml
-    apiVersion: certmanager.k8s.io/v1alpha1
+    apiVersion: cert-manager.io/v1alpha2
     kind: Issuer
     metadata:
       name: letsencrypt
@@ -92,7 +92,7 @@ If you customized the installation of cert-manager, you may need to also set the
 Issue a certificate:
 
 ```yaml
-apiVersion: certmanager.k8s.io/v1alpha1
+apiVersion: cert-manager.io/v1alpha2
 kind: Certificate
 metadata:
   name: example-com
