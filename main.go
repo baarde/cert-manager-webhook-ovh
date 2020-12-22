@@ -142,7 +142,7 @@ func (s *ovhDNSProviderSolver) secret(ref corev1.SecretKeySelector, namespace st
 	if !ok {
 		return "", fmt.Errorf("key not found %q in secret '%s/%s'", ref.Key, namespace, ref.Name)
 	}
-	return string(bytes), nil
+	return strings.TrimSuffix(string(bytes), "\n"), nil
 }
 
 // Present is responsible for actually presenting the DNS record with the
