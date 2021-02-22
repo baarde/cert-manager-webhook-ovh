@@ -71,7 +71,7 @@ type ovhZoneStatus struct {
 }
 
 type ovhZoneRecord struct {
-	Id        int    `json:"id,omitempty"`
+	Id        int64  `json:"id,omitempty"`
 	FieldType string `json:"fieldType"`
 	SubDomain string `json:"subDomain"`
 	Target    string `json:"target"`
@@ -270,9 +270,9 @@ func validateZone(ovhClient *ovh.Client, domain string) error {
 	return nil
 }
 
-func listRecords(ovhClient *ovh.Client, domain, fieldType, subDomain string) ([]int, error) {
+func listRecords(ovhClient *ovh.Client, domain, fieldType, subDomain string) ([]int64, error) {
 	url := "/domain/zone/" + domain + "/record?fieldType=" + fieldType + "&subDomain=" + subDomain
-	ids := []int{}
+	ids := []int64{}
 	err := ovhClient.Get(url, &ids)
 	if err != nil {
 		return nil, fmt.Errorf("OVH API call failed: GET %s - %v", url, err)
@@ -280,8 +280,8 @@ func listRecords(ovhClient *ovh.Client, domain, fieldType, subDomain string) ([]
 	return ids, nil
 }
 
-func getRecord(ovhClient *ovh.Client, domain string, id int) (*ovhZoneRecord, error) {
-	url := "/domain/zone/" + domain + "/record/" + strconv.Itoa(id)
+func getRecord(ovhClient *ovh.Client, domain string, id int64) (*ovhZoneRecord, error) {
+	url := "/domain/zone/" + domain + "/record/" + strconv.FormatInt(id, 10)
 	record := ovhZoneRecord{}
 	err := ovhClient.Get(url, &record)
 	if err != nil {
@@ -290,8 +290,8 @@ func getRecord(ovhClient *ovh.Client, domain string, id int) (*ovhZoneRecord, er
 	return &record, nil
 }
 
-func deleteRecord(ovhClient *ovh.Client, domain string, id int) error {
-	url := "/domain/zone/" + domain + "/record/" + strconv.Itoa(id)
+func deleteRecord(ovhClient *ovh.Client, domain string, id int64) error {
+	url := "/domain/zone/" + domain + "/record/" + strconv.FormatInt(id, 10)
 	err := ovhClient.Delete(url, nil)
 	if err != nil {
 		return fmt.Errorf("OVH API call failed: DELETE %s - %v", url, err)
