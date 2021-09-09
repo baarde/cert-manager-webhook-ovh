@@ -4,7 +4,7 @@ This is a webhook solver for [OVH](http://www.ovh.com).
 
 ## Prerequisites
 
-* [cert-manager](https://github.com/jetstack/cert-manager) version 0.11.0 or higher (*tested with 0.12.0*):
+* [cert-manager](https://github.com/jetstack/cert-manager) version 1.5.3 or higher:
   - [Installing on Kubernetes](https://cert-manager.io/docs/installation/kubernetes/#installing-with-helm)
 
 ## Installation
@@ -63,7 +63,7 @@ If you customized the installation of cert-manager, you may need to also set the
 4. Create a certificate issuer:
 
     ```yaml
-    apiVersion: cert-manager.io/v1alpha2
+    apiVersion: cert-manager.io/v1
     kind: Issuer
     metadata:
       name: letsencrypt
@@ -92,7 +92,7 @@ If you customized the installation of cert-manager, you may need to also set the
 Issue a certificate:
 
 ```yaml
-apiVersion: cert-manager.io/v1alpha2
+apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: example-com
@@ -126,5 +126,5 @@ Then duplicate the `.sample` files in `testdata/ovh/` and update the configurati
 Now you can run the test suite with:
 
 ```bash
-TEST_ZONE_NAME=example.com. go test .
+TEST_ASSET_ETCD=<path_to_etcd> TEST_ASSET_KUBE_APISERVER=<path_to_kube-apiserver> TEST_ASSET_KUBECTL=<path_to_kubectl> TEST_ZONE_NAME=example.com. go test .
 ```
