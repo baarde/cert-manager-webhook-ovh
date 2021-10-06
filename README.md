@@ -115,16 +115,10 @@ DNS01 webhook.**
 
 An example Go test file has been provided in [main_test.go]().
 
-Before you can run the test suite, you need to download the test binaries:
+Before you can run the test suite, you need to duplicate the `.sample` files in `testdata/ovh/` and update the configuration with the appropriate OVH credentials.
+
+You can run the test suite with:
 
 ```bash
-./scripts/fetch-test-binaries.sh
-```
-
-Then duplicate the `.sample` files in `testdata/ovh/` and update the configuration with the appropriate OVH credentials.
-
-Now you can run the test suite with:
-
-```bash
-TEST_ASSET_ETCD=<path_to_etcd> TEST_ASSET_KUBE_APISERVER=<path_to_kube-apiserver> TEST_ASSET_KUBECTL=<path_to_kubectl> TEST_ZONE_NAME=example.com. go test .
+TEST_ZONE_NAME=example.com. make test
 ```

@@ -2,11 +2,15 @@ IMAGE_NAME := "baarde/cert-manager-webhook-ovh"
 IMAGE_TAG := "latest"
 
 OUT := $(shell pwd)/_out
+TEST_ASSET_ETCD := $(OUT)/kubebuilder/bin/etcd
+TEST_ASSET_KUBE_APISERVER := $(OUT)/kubebuilder/bin/kube-apiserver
+TEST_ASSET_KUBECTL := $(OUT)/kubebuilder/bin/kubectl
 
 $(shell mkdir -p "$(OUT)")
 
-verify:
+test:
 	sh ./scripts/fetch-test-binaries.sh
+	TEST_ASSET_ETCD="$(TEST_ASSET_ETCD)" TEST_ASSET_KUBE_APISERVER="$(TEST_ASSET_KUBE_APISERVER)" TEST_ASSET_KUBECTL="$(TEST_ASSET_KUBECTL)" \
 	go test -v .
 
 build:
