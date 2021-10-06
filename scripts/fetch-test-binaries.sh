@@ -2,7 +2,7 @@
 
 set -e
 
-k8s_version=1.14.1
+k8s_version=1.22.0
 arch=amd64
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
