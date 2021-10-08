@@ -12,7 +12,7 @@ This is a webhook solver for [OVH](http://www.ovh.com).
 Choose a unique group name to identify your company or organization (for example `acme.mycompany.example`).
 
 ```bash
-helm install ./deploy/cert-manager-webhook-ovh \
+helm install cert-manager-webhook-ovh ./deploy/cert-manager-webhook-ovh \
  --set groupName='<YOUR_UNIQUE_GROUP_NAME>'
 ```
 
@@ -46,7 +46,7 @@ If you customized the installation of cert-manager, you may need to also set the
       resourceNames: ["ovh-credentials"]
       verbs: ["get", "watch"]
     ---
-    apiVersion: rbac.authorization.k8s.io/v1beta1
+    apiVersion: rbac.authorization.k8s.io/v1
     kind: RoleBinding
     metadata:
       name: cert-manager-webhook-ovh:secret-reader
@@ -98,8 +98,8 @@ metadata:
   name: example-com
 spec:
   dnsNames:
-  - example.com
-  - *.example.com
+  - "example.com"
+  - "*.example.com"
   issuerRef:
     name: letsencrypt
   secretName: example-com-tls
