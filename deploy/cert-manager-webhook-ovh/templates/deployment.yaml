@@ -21,9 +21,7 @@ spec:
         release: {{ .Release.Name }}
     spec:
       serviceAccountName: {{ include "cert-manager-webhook-ovh.fullname" . }}
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
+      securityContext: {{ toYaml .Values.securityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ default .Chart.AppVersion .Values.image.tag }}"
@@ -53,23 +51,18 @@ spec:
             - name: certs
               mountPath: /tls
               readOnly: true
-          resources:
-{{ toYaml .Values.resources | indent 12 }}
-          securityContext:
-            allowPrivilegeEscalation: false
+          resources: {{ toYaml .Values.resources | nindent 12 }}
+          securityContext: {{ toYaml .Values.image.securityContext | nindent 12 }}
       volumes:
         - name: certs
           secret:
             secretName: {{ include "cert-manager-webhook-ovh.servingCertificate" . }}
     {{- with .Values.nodeSelector }}
-      nodeSelector:
-{{ toYaml . | indent 8 }}
+      nodeSelector: {{ toYaml . | nindent 8 }}
     {{- end }}
     {{- with .Values.affinity }}
-      affinity:
-{{ toYaml . | indent 8 }}
+      affinity: {{ toYaml . | nindent 8 }}
     {{- end }}
     {{- with .Values.tolerations }}
-      tolerations:
-{{ toYaml . | indent 8 }}
+      tolerations: {{ toYaml . | nindent 8 }}
     {{- end }}

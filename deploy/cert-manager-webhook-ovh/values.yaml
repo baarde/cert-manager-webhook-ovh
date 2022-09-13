@@ -12,10 +12,16 @@ certManager:
   namespace: cert-manager
   serviceAccountName: cert-manager
 
+securityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+
 image:
   repository: baarde/cert-manager-webhook-ovh
   # tag: latest
   pullPolicy: IfNotPresent
+  securityContext:
+    allowPrivilegeEscalation: false
 
 nameOverride: ""
 fullnameOverride: ""
