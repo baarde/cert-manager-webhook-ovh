@@ -13,7 +13,7 @@ certManager:
   serviceAccountName: cert-manager
 
 image:
-  repository: baarde/cert-manager-webhook-ovh
+  repository: tartanlegrand/cert-manager-webhook-ovh
   # tag: latest
   pullPolicy: IfNotPresent
 
