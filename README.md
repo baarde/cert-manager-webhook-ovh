@@ -12,7 +12,7 @@ This is a webhook solver for [OVH](http://www.ovh.com).
 Choose a unique group name to identify your company or organization (for example `acme.mycompany.example`).
 
 ```bash
-helm install cert-manager-webhook-ovh ./deploy/cert-manager-webhook-ovh \
+helm install cert-manager-webhook-ovh ./charts \
  --set groupName='<YOUR_UNIQUE_GROUP_NAME>'
 ```
 
@@ -115,7 +115,7 @@ DNS01 webhook.**
 
 An example Go test file has been provided in [main_test.go]().
 
-Before you can run the test suite, you need to duplicate the `.sample` files in `testdata/ovh/` and update the configuration with the appropriate OVH credentials.
+Before you can run the test suite, you need to duplicate the `.sample` files in `tests/ovh/` and update the configuration with the appropriate OVH credentials.
 
 You can run the test suite with:
 

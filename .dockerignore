@@ -1,4 +1,5 @@
 /.git
 /_out
 /cert-manager-webhook-ovh
-/testdata
+/charts
+/tests
