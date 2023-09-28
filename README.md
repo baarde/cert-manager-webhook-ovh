@@ -113,12 +113,12 @@ else they will have undetermined behaviour when used with cert-manager.
 **It is essential that you configure and run the test suite when creating a
 DNS01 webhook.**
 
-An example Go test file has been provided in [main_test.go]().
+An example Go test file has been provided in [main_test.go](main_test.go).
 
 Before you can run the test suite, you need to duplicate the `.sample` files in `testdata/ovh/` and update the configuration with the appropriate OVH credentials.
 
 You can run the test suite with:
 
 ```bash
-TEST_ZONE_NAME=example.com. make test
+$ TEST_ZONE_NAME=example.com. make test
 ```
