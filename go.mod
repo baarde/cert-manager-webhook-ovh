@@ -4,7 +4,7 @@ go 1.24.5
 
 require (
 	github.com/cert-manager/cert-manager v1.18.2
-	github.com/ovh/go-ovh v1.4.2
+	github.com/ovh/go-ovh v1.9.0
 	k8s.io/api v0.32.0
 	k8s.io/apiextensions-apiserver v0.32.0
 	k8s.io/apimachinery v0.32.0
