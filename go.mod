@@ -1,6 +1,6 @@
 module github.com/baarde/cert-manager-webhook-ovh
 
-go 1.24.5
+go 1.25.0
 
 require (
 	github.com/cert-manager/cert-manager v1.18.2
