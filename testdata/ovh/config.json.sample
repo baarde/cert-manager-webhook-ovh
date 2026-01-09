@@ -2,8 +2,8 @@
   "endpoint": "ovh-eu",
   "applicationKey": "<your-application-key>",
   "applicationSecretRef": {
-      "Name": "ovh-credentials",
-      "Key": "applicationSecret"
+    "Name": "ovh-credentials",
+    "Key": "applicationSecret"
   },
   "consumerKey": "<your-consumer-key>"
 }
