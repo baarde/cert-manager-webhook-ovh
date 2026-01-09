@@ -235,6 +235,8 @@ func addTXTRecord(ovhClient *ovh.Client, domain, subDomain, target string) error
 }
 
 func removeTXTRecord(ovhClient *ovh.Client, domain, subDomain, target string) error {
+	targetWithQuotes := "\"" + target + "\""
+
 	ids, err := listRecords(ovhClient, domain, "TXT", subDomain)
 	if err != nil {
 		return err
@@ -245,7 +247,7 @@ func removeTXTRecord(ovhClient *ovh.Client, domain, subDomain, target string) er
 		if err != nil {
 			return err
 		}
-		if record.Target != target {
+		if record.Target != target && record.Target != targetWithQuotes {
 			continue
 		}
 		err = deleteRecord(ovhClient, domain, id)

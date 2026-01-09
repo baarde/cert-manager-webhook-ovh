@@ -21,6 +21,7 @@ func TestRunsSuite(t *testing.T) {
 		acmetest.SetResolvedZone(zone),
 		acmetest.SetAllowAmbientCredentials(false),
 		acmetest.SetManifestPath("testdata/ovh"),
+		acmetest.SetStrict(true),
 	)
 
 	//need to uncomment and  RunConformance delete runBasic and runExtended once https://github.com/cert-manager/cert-manager/pull/4835 is merged
