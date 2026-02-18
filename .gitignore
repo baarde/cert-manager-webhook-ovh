@@ -4,7 +4,8 @@
 *.dll
 *.so
 *.dylib
-.idea
+/.idea/
+*.iml
 # Test binary, build with `go test -c`
 *.test
 
@@ -15,6 +16,7 @@
 cert-manager-webhook-ovh
 
 # Make artifacts
+bin
 _out
 _test
 
