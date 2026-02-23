@@ -7,10 +7,7 @@ metadata:
   name: {{ include "cert-manager-webhook-ovh.selfSignedIssuer" . }}
   namespace: {{ .Release.Namespace | quote }}
   labels:
-    app: {{ include "cert-manager-webhook-ovh.name" . }}
-    chart: {{ include "cert-manager-webhook-ovh.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    {{- include "cert-manager-webhook-ovh.labels" . | nindent 4 }}
 spec:
   selfSigned: {}
 
@@ -23,10 +20,7 @@ metadata:
   name: {{ include "cert-manager-webhook-ovh.rootCACertificate" . }}
   namespace: {{ .Release.Namespace | quote }}
   labels:
-    app: {{ include "cert-manager-webhook-ovh.name" . }}
-    chart: {{ include "cert-manager-webhook-ovh.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    {{- include "cert-manager-webhook-ovh.labels" . | nindent 4 }}
 spec:
   secretName: {{ include "cert-manager-webhook-ovh.rootCACertificate" . }}
   duration: 43800h # 5y
@@ -44,10 +38,7 @@ metadata:
   name: {{ include "cert-manager-webhook-ovh.rootCAIssuer" . }}
   namespace: {{ .Release.Namespace | quote }}
   labels:
-    app: {{ include "cert-manager-webhook-ovh.name" . }}
-    chart: {{ include "cert-manager-webhook-ovh.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    {{- include "cert-manager-webhook-ovh.labels" . | nindent 4 }}
 spec:
   ca:
     secretName: {{ include "cert-manager-webhook-ovh.rootCACertificate" . }}
@@ -61,10 +52,7 @@ metadata:
   name: {{ include "cert-manager-webhook-ovh.servingCertificate" . }}
   namespace: {{ .Release.Namespace | quote }}
   labels:
-    app: {{ include "cert-manager-webhook-ovh.name" . }}
-    chart: {{ include "cert-manager-webhook-ovh.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    {{- include "cert-manager-webhook-ovh.labels" . | nindent 4 }}
 spec:
   secretName: {{ include "cert-manager-webhook-ovh.servingCertificate" . }}
   duration: 8760h # 1y

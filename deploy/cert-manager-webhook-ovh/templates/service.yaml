@@ -4,10 +4,7 @@ metadata:
   name: {{ include "cert-manager-webhook-ovh.fullname" . }}
   namespace: {{ .Release.Namespace | quote }}
   labels:
-    app: {{ include "cert-manager-webhook-ovh.name" . }}
-    chart: {{ include "cert-manager-webhook-ovh.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    {{- include "cert-manager-webhook-ovh.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -16,5 +13,4 @@ spec:
       protocol: TCP
       name: https
   selector:
-    app: {{ include "cert-manager-webhook-ovh.name" . }}
-    release: {{ .Release.Name }}
+    {{- include "cert-manager-webhook-ovh.selectorLabels" . | nindent 4 }}

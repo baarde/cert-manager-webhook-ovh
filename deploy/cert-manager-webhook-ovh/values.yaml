@@ -12,6 +12,8 @@ certManager:
   namespace: cert-manager
   serviceAccountName: cert-manager
 
+replicaCount: 1
+
 image:
   repository: baarde/cert-manager-webhook-ovh
   # tag: latest
@@ -21,6 +23,21 @@ imagePullSecrets: []
 
 nameOverride: ""
 fullnameOverride: ""
+
+podAnnotations: {}
+
+podLabels: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
 
 service:
   type: ClusterIP
@@ -32,11 +49,26 @@ resources: {}
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   # limits:
-  #  cpu: 100m
-  #  memory: 128Mi
+  #   cpu: 100m
+  #   memory: 128Mi
   # requests:
-  #  cpu: 100m
-  #  memory: 128Mi
+  #   cpu: 100m
+  #   memory: 128Mi
+
+# Additional environment variables.
+env: []
+  # - name: HTTP_PROXY
+  #   value: http://proxy:8080
+  # - name: HTTPS_PROXY
+  #   value: http://proxy:8080
+  # - name: NO_PROXY
+  #   value: 127.0.0.1,localhost,10.0.0.0/8
+
+# Additional volumes.
+volumes: []
+
+# Additional volumeMounts.
+volumeMounts: []
 
 nodeSelector: {}
 

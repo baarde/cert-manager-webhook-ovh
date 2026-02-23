@@ -4,10 +4,7 @@ metadata:
   name: {{ include "cert-manager-webhook-ovh.fullname" . }}
   namespace: {{ .Release.Namespace | quote }}
   labels:
-    app: {{ include "cert-manager-webhook-ovh.name" . }}
-    chart: {{ include "cert-manager-webhook-ovh.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    {{- include "cert-manager-webhook-ovh.labels" . | nindent 4 }}
 ---
 # Grant the webhook permission to read the ConfigMap containing the Kubernetes
 # apiserver's requestheader-ca-certificate.
@@ -18,10 +15,7 @@ metadata:
   name: {{ include "cert-manager-webhook-ovh.fullname" . }}:webhook-authentication-reader
   namespace: kube-system
   labels:
-    app: {{ include "cert-manager-webhook-ovh.name" . }}
-    chart: {{ include "cert-manager-webhook-ovh.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    {{- include "cert-manager-webhook-ovh.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -39,10 +33,7 @@ kind: ClusterRoleBinding
 metadata:
   name: {{ include "cert-manager-webhook-ovh.fullname" . }}:auth-delegator
   labels:
-    app: {{ include "cert-manager-webhook-ovh.name" . }}
-    chart: {{ include "cert-manager-webhook-ovh.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    {{- include "cert-manager-webhook-ovh.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -59,10 +50,7 @@ kind: ClusterRole
 metadata:
   name: {{ include "cert-manager-webhook-ovh.fullname" . }}:domain-solver
   labels:
-    app: {{ include "cert-manager-webhook-ovh.name" . }}
-    chart: {{ include "cert-manager-webhook-ovh.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    {{- include "cert-manager-webhook-ovh.labels" . | nindent 4 }}
 rules:
   - apiGroups:
       - {{ .Values.groupName }}
@@ -76,10 +64,7 @@ kind: ClusterRoleBinding
 metadata:
   name: {{ include "cert-manager-webhook-ovh.fullname" . }}:domain-solver
   labels:
-    app: {{ include "cert-manager-webhook-ovh.name" . }}
-    chart: {{ include "cert-manager-webhook-ovh.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    {{- include "cert-manager-webhook-ovh.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -95,10 +80,7 @@ kind: ClusterRole
 metadata:
   name: {{ include "cert-manager-webhook-ovh.fullname" . }}:flowcontrol-solver
   labels:
-    app: {{ include "cert-manager-webhook-ovh.name" . }}
-    chart: {{ include "cert-manager-webhook-ovh.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    {{- include "cert-manager-webhook-ovh.labels" . | nindent 4 }}
 rules:
   - apiGroups:
       - "flowcontrol.apiserver.k8s.io"
@@ -114,10 +96,7 @@ kind: ClusterRoleBinding
 metadata:
   name: {{ include "cert-manager-webhook-ovh.fullname" . }}:flowcontrol-solver
   labels:
-    app: {{ include "cert-manager-webhook-ovh.name" . }}
-    chart: {{ include "cert-manager-webhook-ovh.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    {{- include "cert-manager-webhook-ovh.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
