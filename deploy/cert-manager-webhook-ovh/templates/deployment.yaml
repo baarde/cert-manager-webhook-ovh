@@ -4,21 +4,16 @@ metadata:
   name: {{ include "cert-manager-webhook-ovh.fullname" . }}
   namespace: {{ .Release.Namespace | quote }}
   labels:
-    app: {{ include "cert-manager-webhook-ovh.name" . }}
-    chart: {{ include "cert-manager-webhook-ovh.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    {{- include "cert-manager-webhook-ovh.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ include "cert-manager-webhook-ovh.name" . }}
-      release: {{ .Release.Name }}
+      {{- include "cert-manager-webhook-ovh.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app: {{ include "cert-manager-webhook-ovh.name" . }}
-        release: {{ .Release.Name }}
+        {{- include "cert-manager-webhook-ovh.labels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ include "cert-manager-webhook-ovh.fullname" . }}
       {{- with .Values.imagePullSecrets }}
