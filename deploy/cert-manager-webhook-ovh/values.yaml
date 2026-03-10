@@ -18,6 +18,7 @@ image:
   repository: baarde/cert-manager-webhook-ovh
   # tag: latest
   pullPolicy: IfNotPresent
+  pullSecrets: []
 
 imagePullSecrets: []
 
