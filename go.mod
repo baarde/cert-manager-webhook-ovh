@@ -3,7 +3,7 @@ module github.com/baarde/cert-manager-webhook-ovh
 go 1.25.0
 
 require (
-	github.com/cert-manager/cert-manager v1.19.3
+	github.com/cert-manager/cert-manager v1.19.4
 	github.com/ovh/go-ovh v1.9.0
 	k8s.io/api v0.34.4
 	k8s.io/apiextensions-apiserver v0.34.4
@@ -109,7 +109,7 @@ require (
 	k8s.io/apiserver v0.34.4 // indirect
 	k8s.io/component-base v0.34.4 // indirect
 	k8s.io/klog/v2 v2.130.1 // indirect
-	k8s.io/kms v0.35.1 // indirect
+	k8s.io/kms v0.35.2 // indirect
 	k8s.io/kube-openapi v0.0.0-20260127142750-a19766b6e2d4 // indirect
 	k8s.io/utils v0.0.0-20260210185600-b8788abfbbc2 // indirect
 	sigs.k8s.io/apiserver-network-proxy/konnectivity-client v0.34.0 // indirect
