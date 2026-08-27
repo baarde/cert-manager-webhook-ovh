@@ -40,8 +40,9 @@ func main() {
 
 // ovhDNSProviderSolver implements the provider-specific logic needed to
 // 'present' an ACME challenge TXT record for your own DNS provider.
-// To do so, it must implement the `github.com/cert-manager/cert-manager/pkg/acme/webhook.Solver`
-// interface.
+//
+// It must implement the [webhook.Solver] interface:
+// https://pkg.go.dev/github.com/cert-manager/cert-manager/pkg/acme/webhook#Solver
 type ovhDNSProviderSolver struct {
 	client *kubernetes.Clientset
 }
